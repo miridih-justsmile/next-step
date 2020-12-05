@@ -9,8 +9,8 @@ import java.nio.file.Files;
 public class ViewResolver {
     private final File responseFile;
 
-    public ViewResolver(final HttpHead httpHead) {
-        this.responseFile = new File("./webapp" + httpHead.getUrl());
+    public ViewResolver(final String url) {
+        this.responseFile = new File("./webapp" + url);
     }
 
     public byte[] getBodyByte() throws IOException {

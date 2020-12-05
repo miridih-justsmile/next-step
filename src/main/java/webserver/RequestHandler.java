@@ -26,9 +26,8 @@ public class RequestHandler extends Thread {
              final DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream())) {
             // TODO 사용자 요청에 대한 처리는 이 곳에 구현하면 된다.
             final RequestHead requestHead = createRequestHead(bufferedReader);
-            final ViewResolver viewResolver = new ViewResolver(requestHead.getHttpHead());
+            final ViewResolver viewResolver = new ViewResolver(requestHead.getHttpHead().getUrl());
             final byte[] body = viewResolver.getBodyByte();
-
             log.debug("New Client Connected IP : {}, Port : {}, URL : {}", socket.getInetAddress(), socket.getPort(), requestHead.getHttpHead().getUrl());
 
             response200Header(dataOutputStream, body.length, viewResolver.responseContentType());
