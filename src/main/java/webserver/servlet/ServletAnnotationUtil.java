@@ -6,7 +6,6 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 class ServletAnnotationUtil {
-    private static final String DEFAULT_SERVLET_PATH = "/api";
     public static String getMethodPath(final Method method, final RestController.MethodType methodType) {
         final Class<? extends Annotation> annoClass = methodType.getAnnotation();
         if (GET.class.equals(annoClass)) {
@@ -26,6 +25,6 @@ class ServletAnnotationUtil {
     }
 
     public static String getServletPath(final Method method, final RestController.MethodType methodType) {
-        return StringUtil.defaultStr(String.format("%s%s%s", DEFAULT_SERVLET_PATH, getClassPath(method.getDeclaringClass()), getMethodPath(method, methodType)), "/");
+        return StringUtil.defaultStr(String.format("/%s%s%s", Config.DEFAULT_SERVLET_PATH, getClassPath(method.getDeclaringClass()), getMethodPath(method, methodType)), "/");
     }
 }

@@ -17,7 +17,7 @@ public class ReflectionsFactory {
     private final static Logger log = LoggerFactory.getLogger(ReflectionsFactory.class);
     private final static Reflections reflections = new Reflections(
             new ConfigurationBuilder()
-                    .setUrls(ClasspathHelper.forPackage("webserver"))
+                    .setUrls(ClasspathHelper.forPackage(Config.WEB_SERVER_PACKAGE_NAME.value()))
                     .setScanners(new MethodAnnotationsScanner())
                     .filterInputsBy((String str) -> str != null && str.endsWith(".class"))
     );
