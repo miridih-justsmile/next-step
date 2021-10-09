@@ -1,18 +1,18 @@
 package webserver.resolver;
 
-import webserver.request.RequestHead;
+import webserver.request.RequestHeader;
 import webserver.servlet.Config;
 
 public class ViewResolverFactory {
 
-    public static ViewResolver create(final RequestHead requestHead) {
-        final String[] url = requestHead.getHttpHead().getUrl().split("/");
+    public static ViewResolver create(final RequestHeader requestHeader) {
+        final String[] url = requestHeader.getHttpHeader().getUrl().split("/");
         if (url[0] != null) {
             if (Config.DEFAULT_SERVLET_PATH.equals(url[1])) {
-                return new ServletResolver(requestHead);
+                return new ServletResolver(requestHeader);
             }
             else {
-                return new FileResolver(requestHead);
+                return new FileResolver(requestHeader);
             }
         }
         return ViewResolverDefault.EMPTY_RESOLVER;

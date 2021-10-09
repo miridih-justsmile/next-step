@@ -1,14 +1,14 @@
 package webserver.request.head;
 
-public class HttpHead {
+public class HttpHeader {
     private final String method;
-    private final String url;
+    private final URI uri;
     private final String http;
 
-    public HttpHead(final String str) {
+    public HttpHeader(final String str) {
         final String[] strings = str.split(" ", 4);
         this.method = strings[0];
-        this.url = strings[1];
+        this.uri = new URI(strings[1]);
         this.http = strings[2];
     }
 
@@ -16,8 +16,12 @@ public class HttpHead {
         return method;
     }
 
+    public URI getUri() {
+        return uri;
+    }
+
     public String getUrl() {
-        return url;
+        return uri.getUrlString();
     }
 
     public String getHttp() {
@@ -28,7 +32,7 @@ public class HttpHead {
     public String toString() {
         return "HttpHead{" +
                 "method='" + method + '\'' +
-                ", url='" + url + '\'' +
+                ", uri='" + uri.getUriString() + '\'' +
                 ", http='" + http + '\'' +
                 '}';
     }

@@ -1,21 +1,21 @@
 package webserver.request;
 
 import com.sun.istack.internal.Nullable;
-import webserver.request.head.HttpHead;
+import webserver.request.head.HttpHeader;
 
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.Map;
 
-public class RequestHead {
+public class RequestHeader {
     private final Map<Title, String> enumMap = new EnumMap<>(Title.class);
 
-    public void setHead(final Title headerTitle, final String str) {
+    public void setHeader(final Title headerTitle, final String str) {
         enumMap.put(headerTitle, str);
     }
 
-    public HttpHead getHttpHead() {
-        return new HttpHead(enumMap.get(Title.HTTP));
+    public HttpHeader getHttpHeader() {
+        return new HttpHeader(enumMap.get(Title.HTTP));
     }
 
     public enum Title {

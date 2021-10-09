@@ -1,16 +1,16 @@
 package webserver.resolver;
 
-import webserver.request.RequestHead;
+import webserver.request.RequestHeader;
 
 abstract class ViewResolverDefault implements ViewResolver {
 
     final static ViewResolver EMPTY_RESOLVER = new ViewResolverDefault() {};
-    protected RequestHead requestHead;
+    protected RequestHeader requestHeader;
 
     private ViewResolverDefault() {}
 
-    ViewResolverDefault(RequestHead requestHead) {
-        this.requestHead = requestHead;
+    ViewResolverDefault(RequestHeader requestHeader) {
+        this.requestHeader = requestHeader;
     }
 
     @Override

@@ -1,13 +1,13 @@
 package webserver.request;
 
 public class RequestWrapper {
-    private final RequestHead requestHead;
+    private final RequestHeader requestHeader;
 
-    public RequestWrapper(final RequestHead requestHead) {
-        this.requestHead = requestHead;
+    public RequestWrapper(final RequestHeader requestHeader) {
+        this.requestHeader = requestHeader;
     }
 
-    public RequestHead getRequestHead() {
-        return requestHead;
+    public RequestHeader getRequestHead() {
+        return requestHeader;
     }
 }

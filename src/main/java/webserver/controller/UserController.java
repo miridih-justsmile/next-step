@@ -11,7 +11,7 @@ public class UserController extends DefaultServletController {
 
     @GET(path = "/create")
     public String create(final RequestWrapper requestWrapper) {
-        return "Hello!!!\n" + requestWrapper.getRequestHead().getHttpHead().toString();
+        return "Hello!!!\n" + requestWrapper.getRequestHead().getHttpHeader().toString();
     }
 
     @GET(path = "/test")

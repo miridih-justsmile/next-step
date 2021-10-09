@@ -3,7 +3,7 @@ package webserver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import util.HttpRequestUtils;
-import webserver.request.RequestHead;
+import webserver.request.RequestHeader;
 import webserver.resolver.ViewResolver;
 import webserver.resolver.ViewResolverFactory;
 
@@ -23,10 +23,10 @@ public class RequestHandler extends Thread {
         try (final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
              final DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream())) {
             // TODO 사용자 요청에 대한 처리는 이 곳에 구현하면 된다.
-            final RequestHead requestHead = createRequestHead(bufferedReader);
-            final ViewResolver viewResolver = ViewResolverFactory.create(requestHead);
+            final RequestHeader requestHeader = createRequestHead(bufferedReader);
+            final ViewResolver viewResolver = ViewResolverFactory.create(requestHeader);
             final byte[] body = viewResolver.getBodyByte();
-            log.debug("New Client Connected IP : {}, Port : {}, URL : {}", socket.getInetAddress(), socket.getPort(), requestHead.getHttpHead().getUrl());
+            log.debug("New Client Connected IP : {}, Port : {}, URL : {}", socket.getInetAddress(), socket.getPort(), requestHeader.getHttpHeader().getUrl());
 
             response200Header(dataOutputStream, body.length, viewResolver.responseContentType());
             responseBody(dataOutputStream, body);
@@ -55,21 +55,21 @@ public class RequestHandler extends Thread {
         }
     }
 
-    private RequestHead createRequestHead(final BufferedReader bufferedReader) throws IOException {
-        final RequestHead requestHead = new RequestHead();
+    private RequestHeader createRequestHead(final BufferedReader bufferedReader) throws IOException {
+        final RequestHeader requestHeader = new RequestHeader();
         String line = "firstLine";
         while (!"".equals(line)) {
             if ("firstLine".equals(line)) {
                 line = bufferedReader.readLine();
-                requestHead.setHead(RequestHead.Title.HTTP, line);
+                requestHeader.setHeader(RequestHeader.Title.HTTP, line);
             } else {
                 line = bufferedReader.readLine();
                 if (!line.isEmpty()) {
                     final HttpRequestUtils.Pair parseHeader = HttpRequestUtils.parseHeader(line);
-                    requestHead.setHead(RequestHead.Title.getTitle(parseHeader.getKey()), parseHeader.getValue());
+                    requestHeader.setHeader(RequestHeader.Title.getTitle(parseHeader.getKey()), parseHeader.getValue());
                 }
             }
         }
-        return requestHead;
+        return requestHeader;
     }
 }

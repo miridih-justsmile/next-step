@@ -7,7 +7,7 @@ public enum Config {
     private final String value;
     Config(String value) {
         this.value = value;
-    };
+    }
 
     public boolean equals(final String str) {
         return this.value.equals(str);

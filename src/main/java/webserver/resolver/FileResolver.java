@@ -1,7 +1,7 @@
 package webserver.resolver;
 
 import javassist.NotFoundException;
-import webserver.request.RequestHead;
+import webserver.request.RequestHeader;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -10,9 +10,9 @@ import java.util.List;
 class FileResolver extends ViewResolverDefault {
     private final File responseFile;
 
-    FileResolver(RequestHead requestHead) {
-        super(requestHead);
-        this.responseFile = new File("./webapp" + requestHead.getHttpHead().getUrl());
+    FileResolver(RequestHeader requestHeader) {
+        super(requestHeader);
+        this.responseFile = new File("./webapp" + requestHeader.getHttpHeader().getUri().getUrlString());
     }
 
     @Override
