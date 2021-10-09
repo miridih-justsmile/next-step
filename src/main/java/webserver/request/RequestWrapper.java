@@ -1,13 +1,26 @@
 package webserver.request;
 
+import com.sun.istack.internal.Nullable;
+import util.StringUtil;
+import webserver.request.head.HttpHeader;
+
 public class RequestWrapper {
-    private final RequestHeader requestHeader;
+    private final HttpHeader httpHeader;
 
     public RequestWrapper(final RequestHeader requestHeader) {
-        this.requestHeader = requestHeader;
+        this.httpHeader = requestHeader.getHttpHeader();
     }
 
-    public RequestHeader getRequestHead() {
-        return requestHeader;
+    public HttpHeader getHttpHeader() {
+        return httpHeader;
+    }
+
+    @Nullable
+    public String getParameter(final String key) {
+        return getParameter(key, null);
+    }
+
+    public String getParameter(final String key, final String defaultString) {
+        return StringUtil.defaultStr(this.getHttpHeader().getUri().getQueryMap().get(key), defaultString);
     }
 }

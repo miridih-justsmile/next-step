@@ -1,5 +1,7 @@
 package webserver.controller;
 
+import app.user.UserService;
+import app.user.ui.JoinUserVo;
 import webserver.request.RequestWrapper;
 import webserver.servlet.RestController;
 import webserver.servlet.GET;
@@ -11,7 +13,8 @@ public class UserController extends DefaultServletController {
 
     @GET(path = "/create")
     public String create(final RequestWrapper requestWrapper) {
-        return "Hello!!!\n" + requestWrapper.getRequestHead().getHttpHeader().toString();
+        UserService.joinUser(new JoinUserVo(requestWrapper));;
+        return UserService.findAll().toString();
     }
 
     @GET(path = "/test")
