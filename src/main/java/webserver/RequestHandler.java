@@ -5,16 +5,14 @@ import org.slf4j.LoggerFactory;
 import util.HttpRequestUtils;
 import webserver.request.RequestHead;
 import webserver.resolver.ViewResolver;
+import webserver.resolver.ViewResolverFactory;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.Socket;
 
 public class RequestHandler extends Thread {
-    private static final Logger log = LoggerFactory.getLogger(RequestHandler.class);
-    private static final String DEFAULT_CHARSET = "utf-8";
+    private final static Logger log = LoggerFactory.getLogger(RequestHandler.class);
+    private final static String DEFAULT_CHARSET = "utf-8";
     private final Socket socket;
 
     public RequestHandler(final Socket connectionSocket) {
@@ -26,14 +24,14 @@ public class RequestHandler extends Thread {
              final DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream())) {
             // TODO 사용자 요청에 대한 처리는 이 곳에 구현하면 된다.
             final RequestHead requestHead = createRequestHead(bufferedReader);
-            final ViewResolver viewResolver = new ViewResolver(requestHead.getHttpHead().getUrl());
+            final ViewResolver viewResolver = ViewResolverFactory.create(requestHead);
             final byte[] body = viewResolver.getBodyByte();
             log.debug("New Client Connected IP : {}, Port : {}, URL : {}", socket.getInetAddress(), socket.getPort(), requestHead.getHttpHead().getUrl());
 
             response200Header(dataOutputStream, body.length, viewResolver.responseContentType());
             responseBody(dataOutputStream, body);
-        } catch (final IOException e) {
-            log.error(e.getMessage());
+        } catch (final Exception e) {
+            e.printStackTrace();
         }
     }
 

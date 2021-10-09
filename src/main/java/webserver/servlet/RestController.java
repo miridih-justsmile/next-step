@@ -5,8 +5,8 @@ import java.util.Arrays;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Controller {
-    String path();
+public @interface RestController {
+    String path() default "";
 
     enum MethodType {
         GET(webserver.servlet.GET.class), POST(webserver.servlet.POST.class);
