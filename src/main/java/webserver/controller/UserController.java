@@ -17,7 +17,12 @@ public class UserController extends DefaultServletController {
     @GET(path = "/create")
     public String create(final RequestWrapper requestWrapper) {
         UserService.joinUser(new JoinUserVo(requestWrapper));;
-        return UserService.findAll().stream().map(User::getNickNameId).collect(Collectors.toList()).toString();
+        StringBuilder builder = new StringBuilder();
+        builder.append("========== 닉네임 아이디 목록 ==========<br>");
+        for (User user : UserService.findAll()) {
+            builder.append(String.format("%s<br>", user.getNickNameId()));
+        }
+        return builder.toString();
     }
 
     @GET(path = "/test")
