@@ -1,10 +1,13 @@
 package webserver.controller;
 
-import app.user.UserService;
+import app.user.domain.User;
+import app.user.domain.UserService;
 import app.user.ui.JoinUserVo;
 import webserver.request.RequestWrapper;
 import webserver.servlet.RestController;
 import webserver.servlet.GET;
+
+import java.util.stream.Collectors;
 
 @RestController(path = "/user")
 public class UserController extends DefaultServletController {
@@ -14,7 +17,7 @@ public class UserController extends DefaultServletController {
     @GET(path = "/create")
     public String create(final RequestWrapper requestWrapper) {
         UserService.joinUser(new JoinUserVo(requestWrapper));;
-        return UserService.findAll().toString();
+        return UserService.findAll().stream().map(User::getNickNameId).collect(Collectors.toList()).toString();
     }
 
     @GET(path = "/test")

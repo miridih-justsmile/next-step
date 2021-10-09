@@ -9,12 +9,20 @@ public class User {
         userDto = new UserDto();
     }
 
-    public User(final UserDto userDto) {
+    User(final UserDto userDto) {
         this.userDto = userDto;
     }
 
-    public String getUserId() {
-        return userDto.getUserId();
+    public String getNickNameId() {
+        return String.format("%s #%s", userDto.getNickName(), userDto.getNickNameIdx());
+    }
+
+    public Long getNickNameIdx() {
+        return userDto.getNickNameIdx();
+    }
+
+    public String getNickName() {
+        return userDto.getNickName();
     }
 
     public String getPassword() {
@@ -31,6 +39,6 @@ public class User {
 
     @Override
     public String toString() {
-        return "User [userId=" + getUserId() + ", password=" + getPassword() + ", name=" + getName() + ", email=" + getEmail() + "]";
+        return userDto.toString();
     }
 }

@@ -10,15 +10,15 @@ public class JoinUserVo {
     private final String email;
 
     public JoinUserVo(final RequestWrapper requestWrapper) {
-        this.userId = requestWrapper.getParameter("userId");
+        this.userId = requestWrapper.getParameter("nickName");
         this.password = requestWrapper.getParameter("password");
         this.name = requestWrapper.getParameter("name");
         this.email = requestWrapper.getParameter("email");
     }
 
-    public UserDto convertUser() {
+    public UserDto convertDto() {
         final UserDto userDto = new UserDto();
-        userDto.setUserId(userId);
+        userDto.setNickName(userId);
         userDto.setPassword(password);
         userDto.setName(name);
         userDto.setEmail(email);

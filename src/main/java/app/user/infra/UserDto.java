@@ -3,7 +3,8 @@ package app.user.infra;
 public class UserDto {
 
     private Long userIdx;
-    private String userId;
+    private Long nickNameIdx;
+    private String nickName;
     private String password;
     private String name;
     private String email;
@@ -14,16 +15,24 @@ public class UserDto {
         return userIdx;
     }
 
-    public void setUserIdx(long userIdx) {
+    public void setUserIdx(Long userIdx) {
         this.userIdx = userIdx;
     }
 
-    public String getUserId() {
-        return userId;
+    public Long getNickNameIdx() {
+        return nickNameIdx;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setNickNameIdx(Long nickNameIdx) {
+        this.nickNameIdx = nickNameIdx;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     public String getPassword() {
@@ -48,5 +57,17 @@ public class UserDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDto{" +
+                "userIdx=" + userIdx +
+                ", nickNameIdx=" + nickNameIdx +
+                ", nickName='" + nickName + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }
