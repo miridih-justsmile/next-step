@@ -13,12 +13,7 @@ public enum Config {
         return this.value.equals(str);
     }
 
-    public String value(){
+    public String value() {
         return this.value;
-    }
-
-    @Override
-    public String toString() {
-        return this.value();
     }
 }

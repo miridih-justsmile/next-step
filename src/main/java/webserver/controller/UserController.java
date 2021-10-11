@@ -4,16 +4,13 @@ import app.user.domain.User;
 import app.user.domain.UserService;
 import app.user.ui.JoinUserVo;
 import webserver.request.RequestWrapper;
-import webserver.servlet.RestController;
 import webserver.servlet.GET;
-
-import java.util.stream.Collectors;
+import webserver.servlet.POST;
+import webserver.servlet.RestController;
 
 @RestController(path = "/user")
 public class UserController extends DefaultServletController {
-
-    public UserController() {}
-
+    
     @GET(path = "/create")
     public String create(final RequestWrapper requestWrapper) {
         UserService.joinUser(new JoinUserVo(requestWrapper));;
@@ -23,6 +20,11 @@ public class UserController extends DefaultServletController {
             builder.append(String.format("%s<br>", user.getNickNameId()));
         }
         return builder.toString();
+    }
+
+    @POST(path = "create")
+    public String createPost(final RequestWrapper requestWrapper) {
+        return create(requestWrapper);
     }
 
     @GET(path = "/test")

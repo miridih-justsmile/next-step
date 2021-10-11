@@ -25,6 +25,6 @@ class ServletAnnotationUtil {
     }
 
     public static String getServletPath(final Method method, final RestController.MethodType methodType) {
-        return StringUtil.defaultStr(String.format("/%s%s%s", Config.DEFAULT_SERVLET_PATH, getClassPath(method.getDeclaringClass()), getMethodPath(method, methodType)), "/");
+        return String.format("/%s%s%s", Config.DEFAULT_SERVLET_PATH.value(), getClassPath(method.getDeclaringClass()), getMethodPath(method, methodType));
     }
 }
