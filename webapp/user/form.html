@@ -77,6 +77,10 @@
       <div class="panel panel-default content-main">
           <form name="question" method="get" action="/api/user/create">
               <div class="form-group">
+                  <label for="email">이메일 (아이디로 사용됩니다)</label>
+                  <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+              </div>
+              <div class="form-group">
                   <label for="nickName">사용자 닉네임</label>
                   <input class="form-control" id="nickName" name="nickName" placeholder="User nickName">
               </div>
@@ -87,10 +91,6 @@
               <div class="form-group">
                   <label for="name">이름</label>
                   <input class="form-control" id="name" name="name" placeholder="Name">
-              </div>
-              <div class="form-group">
-                  <label for="email">이메일</label>
-                  <input type="email" class="form-control" id="email" name="email" placeholder="Email">
               </div>
               <button type="submit" class="btn btn-success clearfix pull-right">회원가입</button>
               <div class="clearfix" />

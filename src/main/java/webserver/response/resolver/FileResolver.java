@@ -1,9 +1,11 @@
-package webserver.resolver;
+package webserver.response.resolver;
 
+import com.oracle.webservices.internal.api.message.ContentType;
 import javassist.NotFoundException;
 import webserver.request.RequestHeader;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.List;
 
@@ -33,11 +35,14 @@ class FileResolver extends ViewResolverDefault {
     }
 
     @Override
-    public String responseContentType() {
+    public ContentType responseContentType() {
         try {
-            return Files.probeContentType(this.responseFile.toPath());
+            return new ContentType.Builder()
+                    .contentType(Files.probeContentType(this.responseFile.toPath()))
+                    .charset(StandardCharsets.UTF_8.name())
+                    .build();
         } catch (final Exception e) {
-            return "text/html";
+            return super.responseContentType();
         }
     }
 }

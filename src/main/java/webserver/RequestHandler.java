@@ -1,18 +1,22 @@
 package webserver;
 
+import com.oracle.webservices.internal.api.message.ContentType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import util.HttpRequestUtils;
 import webserver.request.RequestHeader;
-import webserver.resolver.ViewResolver;
-import webserver.resolver.ViewResolverFactory;
+import webserver.response.resolver.ViewResolver;
+import webserver.response.resolver.ViewResolverFactory;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.Socket;
+import java.nio.charset.Charset;
 
 public class RequestHandler extends Thread {
     private final static Logger log = LoggerFactory.getLogger(RequestHandler.class);
-    private final static String DEFAULT_CHARSET = "utf-8";
     private final Socket socket;
 
     public RequestHandler(final Socket connectionSocket) {
@@ -28,17 +32,17 @@ public class RequestHandler extends Thread {
             final byte[] body = viewResolver.getBodyByte();
             log.debug("New Client Connected IP : {}, Port : {}, URL : {}", socket.getInetAddress(), socket.getPort(), requestHeader.getHttpHeader().getUrl());
 
-            response200Header(dataOutputStream, body.length, viewResolver.responseContentType());
+            response200Header(dataOutputStream, viewResolver.getCharset(), body.length, viewResolver.responseContentType());
             responseBody(dataOutputStream, body);
         } catch (final Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void response200Header(final DataOutputStream dos, final int lengthOfBodyContent, final String contentType) {
+    private void response200Header(final DataOutputStream dos, final Charset charset, final int lengthOfBodyContent, final ContentType contentType) {
         try {
             dos.writeBytes("HTTP/1.1 200 OK \r\n");
-            dos.writeBytes("Content-Type: " + contentType + ";charset=" + DEFAULT_CHARSET + "\r\n");
+            dos.writeBytes("Content-Type: " + contentType.getContentType() + ";charset=" + charset + "\r\n");
             dos.writeBytes("Content-Length: " + lengthOfBodyContent + "\r\n");
             dos.writeBytes("\r\n");
         } catch (final IOException e) {

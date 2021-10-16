@@ -1,6 +1,6 @@
 package webserver.request;
 
-import com.sun.istack.internal.Nullable;
+import org.jetbrains.annotations.Nullable;
 import util.StringUtil;
 import webserver.request.head.HttpHeader;
 

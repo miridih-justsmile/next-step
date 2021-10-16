@@ -1,6 +1,6 @@
 package webserver.servlet;
 
-import com.sun.istack.internal.Nullable;
+import org.jetbrains.annotations.Nullable;
 import org.reflections.Reflections;
 import org.reflections.scanners.MethodAnnotationsScanner;
 import org.reflections.util.ClasspathHelper;
@@ -23,7 +23,6 @@ public class ReflectionsFactory {
                     .filterInputsBy((String str) -> str != null && str.endsWith(".class"))
     );
     private final static Map<String, Map<RestController.MethodType, Method>> ANNOTATION_METHOD_MAP = controllerMapInit();
-
 
     private static Map<String, Map<RestController.MethodType, Method>> controllerMapInit() {
         final HashMap<String, Map<RestController.MethodType, Method>> builderMap = new HashMap<>();

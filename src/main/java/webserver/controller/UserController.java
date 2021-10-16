@@ -4,6 +4,7 @@ import app.user.domain.User;
 import app.user.domain.UserService;
 import app.user.ui.JoinUserVo;
 import webserver.request.RequestWrapper;
+import webserver.response.result.JsonResult;
 import webserver.servlet.GET;
 import webserver.servlet.POST;
 import webserver.servlet.RestController;
@@ -14,15 +15,10 @@ public class UserController extends DefaultServletController {
     @GET(path = "/create")
     public String create(final RequestWrapper requestWrapper) {
         UserService.joinUser(new JoinUserVo(requestWrapper));;
-        StringBuilder builder = new StringBuilder();
-        builder.append("========== 닉네임 아이디 목록 ==========<br>");
-        for (User user : UserService.findAll()) {
-            builder.append(String.format("%s<br>", user.getNickNameId()));
-        }
-        return builder.toString();
+        return "회원가입이 완료되었습니다.";
     }
 
-    @POST(path = "create")
+    @POST(path = "/create")
     public String createPost(final RequestWrapper requestWrapper) {
         return create(requestWrapper);
     }

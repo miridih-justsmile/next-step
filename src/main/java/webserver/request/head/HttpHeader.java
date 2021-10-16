@@ -6,7 +6,7 @@ public class HttpHeader {
     private final String http;
 
     public HttpHeader(final String str) {
-        final String[] strings = str.split(" ", 4);
+        final String[] strings = str.split("\\s", 3);
         this.method = strings[0];
         this.uri = new URI(strings[1]);
         this.http = strings[2];
