@@ -1,8 +1,6 @@
 package webserver.response.resolver;
 
-import com.oracle.webservices.internal.api.message.ContentType;
-import javassist.NotFoundException;
-import util.StringUtil;
+import webserver.web.ContentType;
 import webserver.request.RequestHeader;
 import webserver.request.RequestWrapper;
 import webserver.response.result.ResponseResult;

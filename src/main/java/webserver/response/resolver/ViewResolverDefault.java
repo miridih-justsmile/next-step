@@ -1,7 +1,7 @@
 package webserver.response.resolver;
 
-import com.oracle.webservices.internal.api.message.ContentType;
 import webserver.request.RequestHeader;
+import webserver.web.ContentType;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;

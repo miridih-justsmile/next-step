@@ -1,6 +1,6 @@
 package webserver;
 
-import com.oracle.webservices.internal.api.message.ContentType;
+import webserver.web.ContentType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import util.HttpRequestUtils;

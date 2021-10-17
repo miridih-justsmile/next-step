@@ -1,6 +1,6 @@
 package webserver.response.result;
 
-import com.oracle.webservices.internal.api.message.ContentType;
+import webserver.web.ContentType;
 
 import java.nio.charset.Charset;
 import java.util.HashMap;

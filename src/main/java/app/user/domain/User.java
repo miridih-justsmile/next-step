@@ -13,30 +13,6 @@ public class User {
         this.userDto = userDto;
     }
 
-    public String getNickNameId() {
-        return String.format("%s #%s", userDto.getNickName(), userDto.getNickNameIdx());
-    }
-
-    public Long getNickNameIdx() {
-        return userDto.getNickNameIdx();
-    }
-
-    public String getNickName() {
-        return userDto.getNickName();
-    }
-
-    public String getPassword() {
-        return userDto.getPassword();
-    }
-
-    public String getName() {
-        return userDto.getName();
-    }
-
-    public String getEmail() {
-        return userDto.getEmail();
-    }
-
     @Override
     public String toString() {
         return userDto.toString();

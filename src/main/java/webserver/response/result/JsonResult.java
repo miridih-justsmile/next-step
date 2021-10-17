@@ -1,7 +1,7 @@
 package webserver.response.result;
 
 import app.json.JsonParser;
-import com.oracle.webservices.internal.api.message.ContentType;
+import webserver.web.ContentType;
 
 import java.nio.charset.StandardCharsets;
 
