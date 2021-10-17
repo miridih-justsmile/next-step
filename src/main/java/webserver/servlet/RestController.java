@@ -9,7 +9,7 @@ public @interface RestController {
     String path() default "";
 
     enum MethodType {
-        GET(webserver.servlet.GET.class), POST(webserver.servlet.POST.class);
+        GET(GET.class), POST(POST.class), DELETE(DELETE.class), PUT(PUT.class);
         private final Class<? extends Annotation> annotation;
         MethodType(final Class<? extends Annotation> annotation) {
             this.annotation = annotation;
