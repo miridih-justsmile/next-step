@@ -1,39 +1,43 @@
 package webserver.response.resolver;
 
 import webserver.request.Request;
+import webserver.response.HTTPStatus;
+import webserver.response.result.ResponseResult;
 import webserver.web.ContentType;
 
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-
 abstract class ViewResolverDefault implements ViewResolver {
-
-    final static ViewResolver EMPTY_RESOLVER = new ViewResolverDefault(){};
     protected final Request request;
-
-    private ViewResolverDefault() {
-        this.request = new Request();
-    }
+    protected final ResponseResult result;
 
     protected ViewResolverDefault(final Request request) {
         this.request = request;
+        this.result = initResult();
     }
 
     @Override
-    public byte[] getBodyByte() {
-        return new byte[0];
+    public final byte[] getHeaderByte() {
+        final StringBuilder builder = new StringBuilder();
+        final HTTPStatus httpStatus = this.getStatus();
+        final ContentType contentType = this.getContentType();
+
+        builder.append(String.format("HTTP/1.1 %s %s \r\n", httpStatus.getStatus(), httpStatus.getDesc()))
+                .append(String.format("Content-Type: %s;charset=%s\r\n", contentType.getContentType(), contentType.getCharset().name()))
+                .append(String.format("Content-Length: %s\r\n", this.result.getByte().length))
+                .append("\r\n");
+        return builder.toString().getBytes(contentType.getCharset());
     }
 
     @Override
-    public ContentType responseContentType() {
-        return new ContentType.Builder()
-                .setContentType("text/html")
-                .setCharset(StandardCharsets.UTF_8)
-                .build();
+    public final byte[] getBodyByte() {
+        return this.result.getByte();
     }
 
-    @Override
-    public Charset getCharset() {
-        return Charset.defaultCharset();
+    protected ContentType getContentType() {
+        return result.getContentType();
     }
+
+    protected abstract ResponseResult initResult();
+    protected HTTPStatus getStatus() {
+        return result.getHttpStatus();
+    };
 }

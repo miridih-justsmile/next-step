@@ -6,7 +6,8 @@ public enum HttpMethod {
     GET,
     POST,
     PUT,
-    DELETE;
+    DELETE,
+    OPTIONS;
 
     public boolean equals(final String str) {
         return this.name().equalsIgnoreCase(str);

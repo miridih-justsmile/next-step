@@ -1,10 +1,8 @@
 package webserver.controller;
 
-import app.user.domain.User;
 import app.user.domain.UserService;
 import app.user.ui.JoinUserVo;
 import webserver.request.RequestWrapper;
-import webserver.response.result.JsonResult;
 import webserver.servlet.GET;
 import webserver.servlet.POST;
 import webserver.servlet.RestController;

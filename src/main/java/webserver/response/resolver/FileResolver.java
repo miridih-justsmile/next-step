@@ -1,48 +1,22 @@
 package webserver.response.resolver;
 
-import webserver.web.ContentType;
-import javassist.NotFoundException;
 import webserver.request.Request;
-
-import java.io.File;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.util.List;
+import webserver.response.result.FileResult;
+import webserver.response.result.ResponseResult;
+import webserver.response.result.StringResult;
 
 class FileResolver extends ViewResolverDefault {
-    private final File responseFile;
 
-    FileResolver(Request request) {
+    FileResolver(final Request request) {
         super(request);
-        this.responseFile = new File("./webapp" + request.getHttpHeader().getUri().getUrlString());
     }
 
     @Override
-    public byte[] getBodyByte() {
+    protected ResponseResult initResult() {
         try {
-            if (responseFile != null) {
-                final List<String> stringList = Files.readAllLines(this.responseFile.toPath());
-                final StringBuilder resultBuilder = new StringBuilder();
-                for (final String str : stringList) {
-                    resultBuilder.append(str);
-                }
-                return resultBuilder.toString().getBytes();
-            }
-            throw new NotFoundException("path를 찾을 수 없음");
+            return FileResult.init(request.getHttpHeader().getUri().getUrlString());
         } catch (Exception e) {
-            return e.getMessage().getBytes();
-        }
-    }
-
-    @Override
-    public ContentType responseContentType() {
-        try {
-            return new ContentType.Builder()
-                    .setContentType(Files.probeContentType(this.responseFile.toPath()))
-                    .setCharset(StandardCharsets.UTF_8)
-                    .build();
-        } catch (final Exception e) {
-            return super.responseContentType();
+            return StringResult.init(e.getMessage());
         }
     }
 }

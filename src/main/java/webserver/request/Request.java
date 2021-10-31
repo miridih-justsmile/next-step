@@ -17,10 +17,6 @@ public class Request {
     private final Map<HeaderTitle, String> headerMap = new EnumMap<>(HeaderTitle.class);
     private final String body;
 
-    public Request() {
-        this.body = "";
-    }
-
     public Request(final BufferedReader reader) throws IOException {
         initHeader(reader);
         this.body = initBody(reader);
@@ -29,7 +25,6 @@ public class Request {
     private void initHeader(final BufferedReader reader) throws IOException {
         String line = "firstLine";
         while (!"".equals(line)) {
-            System.out.println(line);
             if ("firstLine".equals(line)) {
                 line = reader.readLine();
                 headerMap.put(Request.HeaderTitle.HTTP, line);
