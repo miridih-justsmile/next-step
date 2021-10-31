@@ -1,7 +1,7 @@
 package webserver.response.resolver;
 
 import webserver.web.ContentType;
-import webserver.request.RequestHeader;
+import webserver.request.Request;
 import webserver.request.RequestWrapper;
 import webserver.response.result.ResponseResult;
 import webserver.servlet.ReflectionsFactory;
@@ -14,9 +14,9 @@ class ServletResolver extends ViewResolverDefault{
     private final Method method;
     private final ResponseResult result;
 
-    ServletResolver(final RequestHeader requestHeader) throws ViewResolverException {
-        super(requestHeader);
-        this.method = ReflectionsFactory.findApiMethod(requestHeader.getHttpHeader().getMethod(), requestHeader.getHttpHeader().getUrl());
+    ServletResolver(final Request request) throws ViewResolverException {
+        super(request);
+        this.method = ReflectionsFactory.findApiMethod(request.getHttpHeader().getMethod(), request.getHttpHeader().getUrl());
         this.result = methodRun();
     }
 
@@ -35,7 +35,7 @@ class ServletResolver extends ViewResolverDefault{
     }
     private ResponseResult methodRun() throws ViewResolverException {
         try {
-            return ResponseResult.findResult(method.invoke(method.getDeclaringClass().newInstance(), new RequestWrapper(requestHeader)));
+            return ResponseResult.findResult(method.invoke(method.getDeclaringClass().newInstance(), new RequestWrapper(request)));
         } catch (final Exception e) {
             throw new ViewResolverException("결과를 생성할 수 없습니다.", e);
         }

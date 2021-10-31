@@ -1,5 +1,7 @@
 package webserver.servlet;
 
+import webserver.request.http.HttpMethod;
+
 import java.lang.annotation.*;
 import java.util.Arrays;
 
@@ -17,6 +19,10 @@ public @interface RestController {
 
         public Class<? extends Annotation> getAnnotation() {
             return annotation;
+        }
+
+        public static MethodType findMethodType(final HttpMethod httpMethod) {
+            return findMethodType(httpMethod.name());
         }
 
         public static MethodType findMethodType(final String methodName) {

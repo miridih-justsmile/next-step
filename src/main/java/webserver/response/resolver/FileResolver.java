@@ -2,7 +2,7 @@ package webserver.response.resolver;
 
 import webserver.web.ContentType;
 import javassist.NotFoundException;
-import webserver.request.RequestHeader;
+import webserver.request.Request;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
@@ -12,9 +12,9 @@ import java.util.List;
 class FileResolver extends ViewResolverDefault {
     private final File responseFile;
 
-    FileResolver(RequestHeader requestHeader) {
-        super(requestHeader);
-        this.responseFile = new File("./webapp" + requestHeader.getHttpHeader().getUri().getUrlString());
+    FileResolver(Request request) {
+        super(request);
+        this.responseFile = new File("./webapp" + request.getHttpHeader().getUri().getUrlString());
     }
 
     @Override
@@ -38,8 +38,8 @@ class FileResolver extends ViewResolverDefault {
     public ContentType responseContentType() {
         try {
             return new ContentType.Builder()
-                    .contentType(Files.probeContentType(this.responseFile.toPath()))
-                    .charset(StandardCharsets.UTF_8.name())
+                    .setContentType(Files.probeContentType(this.responseFile.toPath()))
+                    .setCharset(StandardCharsets.UTF_8)
                     .build();
         } catch (final Exception e) {
             return super.responseContentType();

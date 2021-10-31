@@ -1,12 +1,11 @@
 package webserver;
 
-import webserver.web.ContentType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import util.HttpRequestUtils;
-import webserver.request.RequestHeader;
+import webserver.request.Request;
 import webserver.response.resolver.ViewResolver;
 import webserver.response.resolver.ViewResolverFactory;
+import webserver.web.ContentType;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -27,10 +26,15 @@ public class RequestHandler extends Thread {
         try (final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
              final DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream())) {
             // TODO 사용자 요청에 대한 처리는 이 곳에 구현하면 된다.
-            final RequestHeader requestHeader = createRequestHead(bufferedReader);
-            final ViewResolver viewResolver = ViewResolverFactory.create(requestHeader);
+            final Request request = new Request(bufferedReader);
+            final ViewResolver viewResolver = ViewResolverFactory.create(request);
             final byte[] body = viewResolver.getBodyByte();
-            log.debug("New Client Connected IP : {}, Port : {}, URL : {}", socket.getInetAddress(), socket.getPort(), requestHeader.getHttpHeader().getUrl());
+            log.debug("IP : {}, Port : {}, Method : {}, URL : {}",
+                    socket.getInetAddress(),
+                    socket.getPort(),
+                    request.getHttpHeader().getMethod(),
+                    request.getHttpHeader().getUrl()
+            );
 
             response200Header(dataOutputStream, viewResolver.getCharset(), body.length, viewResolver.responseContentType());
             responseBody(dataOutputStream, body);
@@ -57,23 +61,5 @@ public class RequestHandler extends Thread {
         } catch (final IOException e) {
             log.error(e.getMessage());
         }
-    }
-
-    private RequestHeader createRequestHead(final BufferedReader bufferedReader) throws IOException {
-        final RequestHeader requestHeader = new RequestHeader();
-        String line = "firstLine";
-        while (!"".equals(line)) {
-            if ("firstLine".equals(line)) {
-                line = bufferedReader.readLine();
-                requestHeader.setHeader(RequestHeader.Title.HTTP, line);
-            } else {
-                line = bufferedReader.readLine();
-                if (!line.isEmpty()) {
-                    final HttpRequestUtils.Pair parseHeader = HttpRequestUtils.parseHeader(line);
-                    requestHeader.setHeader(RequestHeader.Title.getTitle(parseHeader.getKey()), parseHeader.getValue());
-                }
-            }
-        }
-        return requestHeader;
     }
 }

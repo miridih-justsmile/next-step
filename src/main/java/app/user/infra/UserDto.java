@@ -1,5 +1,6 @@
 package app.user.infra;
 
+import app.user.domain.FromSite;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -15,5 +16,5 @@ public class UserDto {
     private String password;
     private String name;
     private String email;
-    private String fromSite;
+    private FromSite fromSite;
 }

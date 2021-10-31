@@ -1,6 +1,6 @@
 package webserver.response.resolver;
 
-import webserver.request.RequestHeader;
+import webserver.request.Request;
 import webserver.web.ContentType;
 
 import java.nio.charset.Charset;
@@ -9,14 +9,14 @@ import java.nio.charset.StandardCharsets;
 abstract class ViewResolverDefault implements ViewResolver {
 
     final static ViewResolver EMPTY_RESOLVER = new ViewResolverDefault(){};
-    protected final RequestHeader requestHeader;
+    protected final Request request;
 
     private ViewResolverDefault() {
-        this.requestHeader = new RequestHeader();
+        this.request = new Request();
     }
 
-    protected ViewResolverDefault(final RequestHeader requestHeader) {
-        this.requestHeader = requestHeader;
+    protected ViewResolverDefault(final Request request) {
+        this.request = request;
     }
 
     @Override
@@ -27,8 +27,8 @@ abstract class ViewResolverDefault implements ViewResolver {
     @Override
     public ContentType responseContentType() {
         return new ContentType.Builder()
-                .contentType("text/html")
-                .charset(StandardCharsets.UTF_8.name())
+                .setContentType("text/html")
+                .setCharset(StandardCharsets.UTF_8)
                 .build();
     }
 

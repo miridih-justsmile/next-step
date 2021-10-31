@@ -7,8 +7,8 @@ import java.nio.charset.Charset;
 public abstract class AbstractResult implements ResponseResult {
     protected final Object obj;
     protected ContentType contentType = new ContentType.Builder()
-            .contentType("text/html")
-            .charset(Charset.defaultCharset().name())
+            .setContentType("text/html")
+            .setCharset(Charset.defaultCharset())
             .build();
 
     protected AbstractResult(Object obj) {

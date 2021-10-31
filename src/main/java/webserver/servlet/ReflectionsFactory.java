@@ -7,6 +7,7 @@ import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import webserver.request.http.HttpMethod;
 
 import java.lang.reflect.Method;
 import java.util.Collections;
@@ -35,7 +36,7 @@ public class ReflectionsFactory {
     }
 
     @Nullable
-    public static Method findApiMethod(final String methodType, final String uri) {
+    public static Method findApiMethod(final HttpMethod methodType, final String uri) {
         return Optional.ofNullable(ANNOTATION_METHOD_MAP.get(uri))
                 .orElseGet(Collections::emptyMap)
                 .get(RestController.MethodType.findMethodType(methodType));

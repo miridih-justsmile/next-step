@@ -9,8 +9,8 @@ public class JsonResult extends AbstractResult {
     private JsonResult(Object obj) {
         super(obj);
         super.setContentType(new ContentType.Builder()
-                .contentType("application/json")
-                .charset(StandardCharsets.UTF_8.name())
+                .setContentType("application/json")
+                .setCharset(StandardCharsets.UTF_8)
                 .build());
     }
 

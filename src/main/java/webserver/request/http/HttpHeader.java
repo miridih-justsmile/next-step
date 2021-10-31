@@ -1,33 +1,23 @@
-package webserver.request.head;
+package webserver.request.http;
 
+import lombok.Getter;
 import webserver.web.URI;
 
+@Getter
 public class HttpHeader {
-    private final String method;
+    private final HttpMethod method;
     private final URI uri;
     private final String http;
 
     public HttpHeader(final String str) {
         final String[] strings = str.split("\\s", 3);
-        this.method = strings[0];
+        this.method = HttpMethod.find(strings[0]);
         this.uri = new URI.Default(strings[1]);
         this.http = strings[2];
     }
 
-    public String getMethod() {
-        return method;
-    }
-
-    public URI getUri() {
-        return uri;
-    }
-
     public String getUrl() {
         return uri.getUrlString();
-    }
-
-    public String getHttp() {
-        return http;
     }
 
     @Override

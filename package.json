@@ -1,0 +1,24 @@
+{
+  "name": "next-step",
+  "version": "1.0.0",
+  "description": "next-step ㅇㅅㅇ",
+  "main": "index.js",
+  "dependencies": {
+    "@types/jquery": "^3.5.8",
+    "typescript": "^4.4.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JustSmiling/next-step.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JustSmiling/next-step/issues"
+  },
+  "homepage": "https://github.com/JustSmiling/next-step#readme"
+}
